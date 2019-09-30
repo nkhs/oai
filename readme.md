@@ -1,3 +1,4 @@
+```
 ./data_provisioning_users --apn oai.ng4T.com --apn2 internet --key fec86ba6eb707ed08905757b1bb44b8f --imsi-first 0467070000000001 --msisdn-first 001011234561000 --mme-identity mme.ng4T.com --no-of-users 2 --realm ng4T.com --truncate True  --verbose True --cassandra-cluster $Cassandra_Server_IP
 
 ./data_provisioning_mme --id 3 --mme-identity mme.ng4T.com --realm ng4T.com --ue-reachability 1 --truncate True  --verbose True -C $Cassandra_Server_IP
@@ -202,7 +203,7 @@ sudo ifconfig enp2s0:sxc 172.55.55.101 up # SPGW-C SXab interface
 sudo ifconfig enp2s0:s5c 172.58.58.102 up # SGW-C S5S8 interface
 sudo ifconfig enp2s0:p5c 172.58.58.101 up # PGW-C S5S8 interface
 sudo ifconfig enp2s0:s11 172.16.1.104 up  # SGW-C S11 interface
-```
+
 --------------------------------------------
 
 alias lte="cd /home/kih/Desktop/openairinterface5g/cmake_targets/lte_build_oai/$
