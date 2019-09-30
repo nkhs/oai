@@ -202,7 +202,9 @@ sudo ifconfig enp2s0:sxc 172.55.55.101 up # SPGW-C SXab interface
 sudo ifconfig enp2s0:s5c 172.58.58.102 up # SGW-C S5S8 interface
 sudo ifconfig enp2s0:p5c 172.58.58.101 up # PGW-C S5S8 interface
 sudo ifconfig enp2s0:s11 172.16.1.104 up  # SGW-C S11 interface
+```
 --------------------------------------------
+
 alias lte="cd /home/kih/Desktop/openairinterface5g/cmake_targets/lte_build_oai/$
 c="/home/kih/Desktop/openairinterface5g/targets/PROJECTS/GENERIC-LTE-EPC/CONF/e$
 C="-O $c"
@@ -221,6 +223,4 @@ alias enbr="/home/kih/Desktop/openairinterface5g/cmake_targets/lte_build_oai/bu$
 alias e=enbr
 alias udb="oai_hss -j $PREFIX/hss_rel14.json --onlyloadkey"
 C2="-O /home/kih/Desktop/enb.conf"
-
-
-
+```
