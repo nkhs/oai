@@ -1,10 +1,15 @@
+
+
 ---------------------
 Other Reference
-1. https://open-cells.com/index.php/2017/06/07/openair-single-machine-ubuntu-17-04-after-major-epc-update/
 
+1. https://open-cells.com/index.php/2017/06/07/
+```
+openair-single-machine-ubuntu-17-04-after-major-epc-update/
+```
 2. https://github.com/OPENAIRINTERFACE/openair-cn/issues/39
 
-
+```
 diff --git a/src/hss_rel14/src/s6as6d_impl.cpp b/src/hss_rel14/src/s6as6d_impl.cpp
 index 6a97bbc6..615e3d0d 100755
 --- a/src/hss_rel14/src/s6as6d_impl.cpp
@@ -19,30 +24,34 @@ index 6a97bbc6..615e3d0d 100755
  
                //We succeeded to verify SQN_MS...
 
-
+```
 3. https://chancetarver.com/oai/fixes/
+```
  WRR_LIST_SELECTION = (
         {ID="tac-lb01.tac-hb00.tac.epc.mnc092.mcc208.3gppnetwork.org" ;      SGW_IPV4_ADDRESS_FOR_S11="172.16.1.114/24";}
     );
-
+```
 4. https://github.com/OPENAIRINTERFACE/openair-cn-cups/issues/4
+```
 No need more: Speed is slow
-
+```
 5.https://gloiremao.gitbooks.io/oai-tutorial/content/chapter3.html
+```
  /openair-cn/UTILS/mcc_mnc_itu.c
 const mcc_mnc_list_t  mcc_mnc_list[]={
 {466,”68”}   ###<- add this entry
-…..
+...
 }
+
 
 ./NAS/MME/EMM/SAP/emm_send.c:186: In emm_send_attach_accept() function, replace this line
 emm_msg->epsattachresult = EPS_ATTACH_RESULT_EPS;
 with 
 emm_msg->epsattachresult = EPS_ATTACH_RESULT_EPS_IMSI;
-
+```
 
 ---------------------
-
+```
 
 ./data_provisioning_users --apn oai.ng4T.com --apn2 internet --key fec86ba6eb707ed08905757b1bb44b8f --imsi-first 0467070000000001 --msisdn-first 001011234561000 --mme-identity mme.ng4T.com --no-of-users 2 --realm ng4T.com --truncate True  --verbose True --cassandra-cluster $Cassandra_Server_IP
 
@@ -50,7 +59,7 @@ emm_msg->epsattachresult = EPS_ATTACH_RESULT_EPS_IMSI;
 
 
 
-------------------------------------- Create HSS configuration files---------------------------------------------
+############################# HSS Rel14 ########################
 # prompt has been removed for easier Ctrl+C Ctrl+V
 # cd $OPENAIRCN_DIR/scripts
 
@@ -83,9 +92,9 @@ done
 # set in $PREFIX/freeDiameter/hss_rel14_fd.conf and uncomment the following line
 sed -i -e 's/#ListenOn/ListenOn/g' $PREFIX/freeDiameter/hss_rel14_fd.conf 
 
---------------------------------------------------------------------------------------------------------------
+############################# HSS Rel14 Update OPC ########################
 oai_hss -j $PREFIX/hss_rel14.json --onlyloadkey
---------------------------------------- Create MME configuration files --------------------------------------------	
+############################# MME ########################
 # prompt has been removed for easier Ctrl+C Ctrl+V
 openssl rand -out $HOME/.rnd 128
 # cd $OPENAIRCN_DIR/scripts
@@ -172,7 +181,7 @@ done
 # Generate freeDiameter certificate
 sudo ./check_mme_s6a_certificate $PREFIX/freeDiameter mme.${MME_CONF[@REALM@]}
 
-------------------------------------------------------spgwc -------------------------------------------
+############################# SPGWC ########################
 
 # prompt has been removed for easier Ctrl+C Ctrl+V
 sudo ifconfig enp2s0:sxc 172.55.55.101 up # SPGW-C SXab interface
@@ -201,7 +210,7 @@ for K in "${!SPGWC_CONF[@]}"; do
   ret=$?;[[ ret -ne 0 ]] && echo "Tried to replace $K with ${SPGWC_CONF[$K]}"
 done
 
-------------------------------------spgw u----------------------------------------------------
+############################# SPGWU ########################
 
 
 # prompt has been removed for easier Ctrl+C Ctrl+V
@@ -228,7 +237,7 @@ done
 
 
 
-------------------------------------? --------------------------------------------
+############################# SPGWC/SPGWU ? ########################
 echo '200 lte' | sudo tee --append /etc/iproute2/rt_tables
 # Here the gateway is at 192.168.78.245
 sudo ip r add default via 192.168.78.245 dev ens10 table lte
@@ -236,7 +245,7 @@ sudo ip r add default via 192.168.78.245 dev ens10 table lte
 sudo ip rule add from 12.0.0.0/8 table lte
 
 
-------------------------------------------------------ifconfig---------------------------------
+############################# IFCONFIG ########################
 
 # MME
 sudo ifconfig enp2s0:m11 172.16.1.102 up
@@ -248,7 +257,9 @@ sudo ifconfig enp2s0:sxc 172.55.55.101 up # SPGW-C SXab interface
 sudo ifconfig enp2s0:s5c 172.58.58.102 up # SGW-C S5S8 interface
 sudo ifconfig enp2s0:p5c 172.58.58.101 up # PGW-C S5S8 interface
 sudo ifconfig enp2s0:s11 172.16.1.104 up  # SGW-C S11 interface
---------------------------------------------
+
+############################# .bashrc ########################
+
 alias lte="cd /home/kih/Desktop/openairinterface5g/cmake_targets/lte_build_oai/$
 c="/home/kih/Desktop/openairinterface5g/targets/PROJECTS/GENERIC-LTE-EPC/CONF/e$
 C="-O $c"
@@ -267,6 +278,4 @@ alias enbr="/home/kih/Desktop/openairinterface5g/cmake_targets/lte_build_oai/bu$
 alias e=enbr
 alias udb="oai_hss -j $PREFIX/hss_rel14.json --onlyloadkey"
 C2="-O /home/kih/Desktop/enb.conf"
-
-
-
+```
