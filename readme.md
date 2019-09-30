@@ -1,3 +1,49 @@
+---------------------
+Other Reference
+1. https://open-cells.com/index.php/2017/06/07/openair-single-machine-ubuntu-17-04-after-major-epc-update/
+
+2. https://github.com/OPENAIRINTERFACE/openair-cn/issues/39
+
+
+diff --git a/src/hss_rel14/src/s6as6d_impl.cpp b/src/hss_rel14/src/s6as6d_impl.cpp
+index 6a97bbc6..615e3d0d 100755
+--- a/src/hss_rel14/src/s6as6d_impl.cpp
++++ b/src/hss_rel14/src/s6as6d_impl.cpp
+@@ -653,7 +653,7 @@ req->dump();
+         }
+ 
+         if (auts_set) {
+-            sqn = sqn_ms_derive_cpp (imsisec.opc, imsisec.key, auts, imsisec.rand);
++            sqn = sqn_ms_derive_cpp (imsisec.opc, imsisec.key, auts + 16, imsisec.rand);
+             if (sqn != NULL) {
+ 
+               //We succeeded to verify SQN_MS...
+
+
+3. https://chancetarver.com/oai/fixes/
+ WRR_LIST_SELECTION = (
+        {ID="tac-lb01.tac-hb00.tac.epc.mnc092.mcc208.3gppnetwork.org" ;      SGW_IPV4_ADDRESS_FOR_S11="172.16.1.114/24";}
+    );
+
+4. https://github.com/OPENAIRINTERFACE/openair-cn-cups/issues/4
+No need more: Speed is slow
+
+5.https://gloiremao.gitbooks.io/oai-tutorial/content/chapter3.html
+ /openair-cn/UTILS/mcc_mnc_itu.c
+const mcc_mnc_list_t  mcc_mnc_list[]={
+{466,”68”}   ###<- add this entry
+…..
+}
+
+./NAS/MME/EMM/SAP/emm_send.c:186: In emm_send_attach_accept() function, replace this line
+emm_msg->epsattachresult = EPS_ATTACH_RESULT_EPS;
+with 
+emm_msg->epsattachresult = EPS_ATTACH_RESULT_EPS_IMSI;
+
+
+---------------------
+
+
 ./data_provisioning_users --apn oai.ng4T.com --apn2 internet --key fec86ba6eb707ed08905757b1bb44b8f --imsi-first 0467070000000001 --msisdn-first 001011234561000 --mme-identity mme.ng4T.com --no-of-users 2 --realm ng4T.com --truncate True  --verbose True --cassandra-cluster $Cassandra_Server_IP
 
 ./data_provisioning_mme --id 3 --mme-identity mme.ng4T.com --realm ng4T.com --ue-reachability 1 --truncate True  --verbose True -C $Cassandra_Server_IP
