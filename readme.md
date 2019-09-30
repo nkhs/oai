@@ -260,21 +260,20 @@ sudo ifconfig enp2s0:s11 172.16.1.104 up  # SGW-C S11 interface
 
 ############################# .bashrc ########################
 
-alias lte="cd /home/kih/Desktop/openairinterface5g/cmake_targets/lte_build_oai/$
-c="/home/kih/Desktop/openairinterface5g/targets/PROJECTS/GENERIC-LTE-EPC/CONF/e$
-C="-O $c"
-Cassandra_Server_IP='127.0.0.1'
-PREFIX='/usr/local/etc/oai'
+alias cn="cd /home/kih/Desktop/openair-cn/scripts"
+alias cups="cd /home/kih/Desktop/openair-cn-cups/build/scripts"
+alias oai="cd /home/kih/Desktop/openairinterface5g"
+alias conf="cd /usr/local/etc/oai"
+PREFIX=/usr/local/etc/oai
+P=$PREFIX
+PATH=$PATH:/home/kih/Desktop/openair-cn/build/hss_rel14/bin/
 
 alias scr="sudo spgwc -c $PREFIX/spgw_c.conf"
 alias sur="sudo spgwu -c $PREFIX/spgw_u.conf"
 alias hssr="hss -j /usr/local/etc/oai/hss_rel14.json"
 alias mmer="sudo mme -c $PREFIX/mme.conf"
 
-Cassandra_Server_IP='127.0.0.1'
-PREFIX='/usr/local/etc/oai'
-
-alias enbr="/home/kih/Desktop/openairinterface5g/cmake_targets/lte_build_oai/bu$
+alias enbr="/home/kih/Desktop/openairinterface5g/cmake_targets/lte_build_oai/build/lte-softmodem $C"
 alias e=enbr
 alias udb="oai_hss -j $PREFIX/hss_rel14.json --onlyloadkey"
 C2="-O /home/kih/Desktop/enb.conf"
