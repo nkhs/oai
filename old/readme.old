@@ -1,0 +1,69 @@
+1. Install ubuntu 16.04.1
+
+2. Install linux-kernel-4.7
+wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710_4.7.10-040710.201610220847_all.deb
+wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-image-4.7.10-040710-lowlatency_4.7.10-040710.201610220847_amd64.deb
+wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710-lowlatency_4.7.10-040710.201610220847_amd64.deb
+
+dpkg -i *.deb
+
+nano /etc/default/grub
+
+#GRUB_HIDDEN_TIMEOUT=0
+GRUB_TIMEOUT=-1
+
+
+sudo update-grub
+reboot
+3. Download source code/compile
+apt install git
+
+git clone https://github.com/OPENAIRINTERFACE/openair-cn
+cd openair-cn
+git checkout v0.5.0
+
+source oaienv
+cd scripts
+./build_hss -i
+#mysql username/password
+./build_mme -i
+./build_spgw -i
+
+./build_hss
+./build_mme
+./build_spgw
+
+4. Configuration
+
+cd openair-cn/scripts
+#populate database(mysql)
+./hss_db_import 127.0.0.1 mysql_user mysql_password oai_db ../src/oai_hss/db/oai_db.sql
+#set FQDN
+nano /etc/hosts
+
+127.0.0.1       localhost
+127.0.1.1       yang.openair4G.eur yang
+127.0.0.20      hss.openair4G.eur hss
+
+
+nano /etc/hostname
+
+yang
+
+#Copy sample configuration files, and update
+mkdir -p /usr/local/etc/oai/
+mkdir -p /usr/local/etc/oai/freeDiameter
+
+cp ../etc/hss.conf /usr/local/etc/oai/
+cp ../etc/mme.conf /usr/local/etc/oai/
+cp ../etc/spgw.conf /usr/local/etc/oai/
+
+
+cp ../etc/acl.conf /usr/local/etc/oai/freeDiameter
+cp ../etc/hss_fd.conf /usr/local/etc/oai/freeDiameter
+cp ../etc/mme_fd.conf /usr/local/etc/oai/freeDiameter
+
+---------------------------------------------------------------------------
+
+5. Run
+
